@@ -10,6 +10,7 @@ export async function backendHealth(): Promise<BackendHealth | null> {
   const base = process.env.WORDPRESS_URL;
   if (!base) return null;
   const url = new URL('/wp-json/riffit/v1/health', base);
+  url.searchParams.set('riffit_client', '0.9.1');
   if (url.protocol !== 'https:' && !['localhost', '127.0.0.1'].includes(url.hostname)) {
     throw new Error('The WordPress backend requires HTTPS.');
   }

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Riffit Core
  * Description: Headless community APIs for the Riffit Spacefast starter.
- * Version: 0.9.0
+ * Version: 0.9.1
  * Requires at least: 6.5
  * Requires PHP: 8.2
  * Requires Plugins: bbpress, buddypress
@@ -12,7 +12,7 @@
 namespace Riffit;
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-const VERSION = '0.9.0';
+const VERSION = '0.9.1';
 require_once __DIR__ . '/src/Api.php';
 require_once __DIR__ . '/src/Auth.php';
 require_once __DIR__ . '/src/WordPressConnect.php';

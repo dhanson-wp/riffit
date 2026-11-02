@@ -12,7 +12,7 @@ final class Auth {
         add_action( 'admin_init', array( $this, 'settings' ) );
         add_action( 'riffit_auth_cleanup', array( $this, 'cleanup' ) );
         add_filter( 'rest_post_dispatch', static function ( $response, $server, $request ) {
-            if ( str_starts_with( $request->get_route(), '/riffit/v1/auth/' ) || '/riffit/v1/me' === $request->get_route() || str_starts_with( $request->get_route(), '/riffit/v1/account' ) ) {
+            if ( str_starts_with( $request->get_route(), '/riffit/v1/' ) ) {
                 $response->header( 'Cache-Control', 'private, no-store' );
                 $response->header( 'Referrer-Policy', 'no-referrer' );
             }
