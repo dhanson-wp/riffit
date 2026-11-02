@@ -1,0 +1,8 @@
+"use client";
+import {useEffect,useState} from 'react';
+import {LogOut,ShieldCheck} from 'lucide-react';
+export default function AccountSecurity(){
+ const [account,setAccount]=useState<{email:string;sessions:number}|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[notice,setNotice]=useState('');
+ useEffect(()=>{let live=true;fetch('/api/community/account').then(async r=>{const data=await r.json();if(!r.ok)throw new Error(data.message||'Could not load your account.');if(live)setAccount(data);}).catch(e=>{if(live)setError(e.message);});return()=>{live=false;};},[]);
+ return <section><h3><ShieldCheck aria-hidden="true"/>Sign-in and security</h3>{account?<><label htmlFor="account-email">Private sign-in email</label><input id="account-email" value={account.email} readOnly type="email"/><p>{account.sessions} active {account.sessions===1?'session':'sessions'}. Email links expire after 15 minutes and work only in the requesting browser.</p><button className="quiet" disabled={busy||account.sessions<2} onClick={async()=>{setBusy(true);setError('');try{const r=await fetch('/api/community/account/sessions',{method:'DELETE'});if(!r.ok)throw new Error('Could not sign out other browsers.');setAccount({...account,sessions:1});setNotice('Other browsers signed out. You’re still signed in here.');}catch(e){setError((e as Error).message);}finally{setBusy(false);}}}>{busy?'Signing out…':'Sign out other browsers'}</button></>:!error&&<p role="status">Loading account…</p>}{error&&<p role="alert" className="error">{error}</p>}{notice&&<p role="status">{notice}</p>}<form action="/api/auth/logout" method="post"><button className="quiet"><LogOut aria-hidden="true"/>Sign out of this browser</button></form></section>;
+}

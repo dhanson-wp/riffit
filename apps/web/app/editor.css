@@ -1,0 +1,25 @@
+.riffit-block-editor { --wp-admin-theme-color:#245b43; --wp-admin-theme-color--rgb:36,91,67; --wp-admin-theme-color-darker-10:#194a34; --wp-admin-theme-color-darker-20:#123c29; color:#233b30; font-family:inherit; }
+.community-app .writing-actions {display:flex;align-items:center;gap:4px;border-bottom:1px solid #e0e8e1;padding:8px 0;color:#697c70;font-size:12px;}
+.community-app .writing-actions span{margin-left:auto;}
+.community-app .riffit-block-editor button.components-button {width:auto;min-width:0;min-height:32px;padding:6px;border:0;border-radius:5px;background:transparent;color:#355a45;box-shadow:none;line-height:1;}
+.community-app .riffit-block-editor button.components-button:hover {background:#eaf1e8;}
+.community-app .riffit-block-editor button.components-button:disabled {opacity:.35;}
+.community-app .riffit-block-editor svg {width:24px;height:24px;max-width:none;}
+.community-app .riffit-writing-canvas {min-height:280px;padding:22px 4px 80px;cursor:text;font-size:17px;line-height:1.65;}
+.community-app .riffit-writing-canvas .wp-block {max-width:100%;margin:0 0 18px;}
+.community-app .riffit-writing-canvas p {font-size:inherit;line-height:inherit;color:inherit;}
+.community-app .riffit-writing-canvas h2 {font-size:25px;margin:20px 0 12px;}
+.community-app .riffit-writing-canvas h3 {font-size:21px;}
+.community-app .riffit-writing-canvas ul,.community-app .riffit-writing-canvas ol {padding-left:26px;}
+.community-app .riffit-writing-canvas blockquote {border-left:3px solid #91b49a;margin:18px 0;padding-left:20px;}
+.community-app .riffit-writing-canvas pre {background:#eff3ed;padding:16px;white-space:pre-wrap;}
+.riffit-block-editor .block-editor-block-list__layout {min-height:110px;}
+.riffit-block-editor .block-editor-block-list__block:focus:after {box-shadow:none;}
+.community-app .riffit-block-editor input {width:auto;}
+.components-popover {z-index:100;}
+@media(max-width:750px){.community-app .riffit-writing-canvas {padding-top:20px;font-size:16px;}.community-app .riffit-block-editor .block-editor-block-contextual-toolbar {max-width:calc(100vw - 32px);overflow-x:auto;}}
+
+.riffit-writing-canvas .block-editor-block-list__block .block-editor-block-list__layout {min-height:0;}
+
+.riffit-writing-canvas .block-editor-block-list__block.block-editor-block-list__layout {min-height:0;}
+.community-app .riffit-writing-canvas [contenteditable][role="textbox"]:focus-visible {outline:1px solid var(--riffit-focus,#73926b);outline-offset:5px;}

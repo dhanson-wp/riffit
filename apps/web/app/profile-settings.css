@@ -1,0 +1,35 @@
+.riffit-member-avatar{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--pale,#edf2e8);border:1px solid var(--line,#dce5d7);border-radius:50%;vertical-align:middle}
+.riffit-member-avatar img{display:block;width:100%;height:100%;object-fit:contain}
+.community-app .profile-settings-heading .riffit-member-avatar{width:64px;height:64px}
+.community-app .profile-settings-intro{margin:0 0 24px}
+.community-app .profile-fields{border:0;padding:0;margin:0;min-width:0}
+.community-app .profile-fields>label{display:block;margin:24px 0 8px;font-size:14px;font-weight:650;color:var(--forest)}
+.community-app .profile-settings .profile-field-help{font-size:12px;margin:7px 0 0;color:var(--muted)}
+.community-app .profile-settings .profile-field-note{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;margin:8px 0 0}
+.community-app .profile-settings .profile-field-note span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+.community-app .profile-settings .profile-avatar-picker{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper,#fff)}
+.community-app .profile-avatar-picker>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px}
+.community-app .profile-avatar-picker>summary::-webkit-details-marker{display:none}
+.community-app .profile-avatar-picker>summary>span{display:grid;gap:4px}
+.community-app .profile-avatar-picker>summary strong{font-size:14px;color:var(--forest)}
+.community-app .profile-avatar-picker>summary span span{font-size:12px;color:var(--muted)}
+.community-app .profile-avatar-picker>summary>svg{width:18px;height:18px;color:var(--forest);transition:transform .15s}
+.community-app .profile-avatar-picker[open]>summary>svg{transform:rotate(180deg)}
+.community-app .profile-settings .avatar-choices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;border:0;border-top:1px solid var(--line);padding:16px;margin:0;min-width:0}
+.community-app .avatar-choice{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;margin:0;cursor:pointer;min-width:0;font-size:11px;line-height:1.4;color:var(--muted);text-align:center}
+.community-app .avatar-choice input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.community-app .avatar-choice-art{position:relative;display:grid;place-items:center;border:2px solid transparent;background:var(--pale);border-radius:14px;width:100%;aspect-ratio:1;pointer-events:none}
+.community-app .avatar-choice-art img{width:100%;height:100%;object-fit:contain;max-height:110px}
+.community-app .avatar-choice.is-selected .avatar-choice-art{border-color:var(--forest);background:var(--paper,#fff)}
+.community-app .avatar-choice-art svg{position:absolute;right:3px;bottom:3px;width:20px;height:20px;padding:3px;border-radius:50%;background:var(--forest);color:var(--paper,#fff)}
+.community-app .avatar-choice input:focus-visible+.avatar-choice-art{outline:3px solid var(--forest);outline-offset:3px}
+.community-app .profile-settings .profile-save-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:24px}
+.community-app .profile-settings .profile-save-row button{margin:0;min-height:44px}
+.community-app .profile-reset{display:inline-flex;align-items:center;gap:7px;color:var(--forest)}
+.community-app .profile-reset svg{width:15px;height:15px}
+.community-app .profile-settings .profile-save-status{min-height:22px;margin:12px 0 0;font-size:12px;color:var(--forest)}
+.community-app .profile-settings button:disabled{opacity:.5}
+@media(max-width:750px){.community-app .profile-settings .avatar-choices{grid-template-columns:repeat(4,minmax(0,1fr));padding:12px;gap:8px}.community-app .profile-settings-heading{flex-wrap:wrap}.community-app .profile-settings-heading>a{margin-left:0}.community-app .profile-settings .profile-field-note{font-size:11px}}
+
+.community-app .avatar-choices>.avatar-choice:first-of-type {grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;font-size:13px;padding:8px;background:var(--pale);border-radius:10px;}
+.community-app .avatar-choices>.avatar-choice:first-of-type .avatar-choice-art {width:56px;flex-shrink:0;}

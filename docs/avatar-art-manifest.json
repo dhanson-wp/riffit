@@ -1,0 +1,232 @@
+{
+  "date": "2026-11-01",
+  "tool": "built-in image_gen.imagegen",
+  "reference": "apps/web/public/riffit-gecko.webp",
+  "reference_sha256": "3e83f1102fa5242a9c34c7edb79375ef29deb5d03c0397bf4c363ac648dffa3e",
+  "prompt_template": "Use case: identity-preserve. Create ONE square transparent user avatar of the exact approved Riffit gecko mascot in reference image, wearing {outfit}. Preserve pale sage gecko skin, creamy throat, enormous glossy dark forest eyes with white highlights, tiny dot nostrils, warm smile, curled tail, friendly flat illustrated sticker style with dark green outline. Full body sitting, same front three-quarter view, centered with 8 percent margin, all headwear and tail inside frame, face dominant unobstructed, crisp silhouette readable at 40 pixels. Only outfit changes; same character proportions. Keep simple clear outfit silhouette. No backdrop, no ground, no lettering, no logos, no watermark. Genuine transparent alpha.",
+  "optimization": "cwebp -q 88 -resize 384 384 INPUT -o OUTPUT",
+  "avatars": [
+    {
+      "id": "gardener",
+      "name": "Gardener",
+      "outfit": "a straw gardening hat and moss green overalls, holding a tiny sprout",
+      "output": "apps/web/public/avatars/gardener.webp",
+      "sha256": "9396a552e70c6ecefbd9a181ecf2d51aea88b2619bf2bb8eb1ad5f005facd11d",
+      "bytes": 27342,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "astronaut",
+      "name": "Astronaut",
+      "outfit": "a cream and sage astronaut suit, open clear helmet showing face",
+      "output": "apps/web/public/avatars/astronaut.webp",
+      "sha256": "4719f859cd094ec21a4dc4ff465e57413fa26a66836be7f0bf3465cddcdec1fe",
+      "bytes": 29556,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "artist",
+      "name": "Artist",
+      "outfit": "a burgundy artist beret and paint-spattered cream smock",
+      "output": "apps/web/public/avatars/artist.webp",
+      "sha256": "3692c69ac7c88127baed84ee75ec7eafa6ab3ff129d019f0c4b3e631cded5ed2",
+      "bytes": 25364,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "baker",
+      "name": "Baker",
+      "outfit": "a floppy baker hat and ochre apron",
+      "output": "apps/web/public/avatars/baker.webp",
+      "sha256": "5ecf70c6cfe6c45ae95e2ff1f9847cf8d3efe4053f346fa31a87f59cb73c2a20",
+      "bytes": 26304,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "explorer",
+      "name": "Explorer",
+      "outfit": "an olive safari hat and tan utility vest",
+      "output": "apps/web/public/avatars/explorer.webp",
+      "sha256": "d2b7aadd0974cde14e655b024e6fd7c0471234d41dc7ea786cb28ad81ee43d30",
+      "bytes": 27534,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "gamer",
+      "name": "Gamer",
+      "outfit": "oversized sage headphones and a charcoal hoodie",
+      "output": "apps/web/public/avatars/gamer.webp",
+      "sha256": "6d5cd7df8c7d1967f2e27dd9674ffd537030b331a94e36b3c71b7f49cf59a9d3",
+      "bytes": 26536,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "musician",
+      "name": "Musician",
+      "outfit": "a rust knit cap and a tiny acoustic guitar",
+      "output": "apps/web/public/avatars/musician.webp",
+      "sha256": "5ba32a519436c303dd53b38864a7071742e2df7917aae5f92bfd37d3f7543472",
+      "bytes": 26996,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "reader",
+      "name": "Bookworm",
+      "outfit": "round amber glasses and a cream cardigan, holding a book",
+      "output": "apps/web/public/avatars/reader.webp",
+      "sha256": "62f775e15b712a639b44b661fa84809c05cbd4ae0e99d6538587a5f713cb6f42",
+      "bytes": 27876,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "scientist",
+      "name": "Scientist",
+      "outfit": "a white lab coat and safety goggles perched on forehead",
+      "output": "apps/web/public/avatars/scientist.webp",
+      "sha256": "dc63d79c4c00d2baf84951534a4005a22c187c3810a73529813575623367a07e",
+      "bytes": 28716,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "cyclist",
+      "name": "Cyclist",
+      "outfit": "a sage bicycle helmet and rust cycling jersey",
+      "output": "apps/web/public/avatars/cyclist.webp",
+      "sha256": "84bb10f65c2a6c69e2f098424dace544409a2fb55ff94be5e540907d6d07c673",
+      "bytes": 24774,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "detective",
+      "name": "Detective",
+      "outfit": "a tan detective coat and deerstalker cap",
+      "output": "apps/web/public/avatars/detective.webp",
+      "sha256": "dd5991f7962415f4089333662855ef1e8357a0d064b28bd520685eb0e03cd9d7",
+      "bytes": 28112,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "wizard",
+      "name": "Wizard",
+      "outfit": "a forest green pointed wizard hat with tiny cream stars and matching cape",
+      "output": "apps/web/public/avatars/wizard.webp",
+      "sha256": "a209b852cbe538ded8ff0de716e28982b2896ef14a2945ae1c4c6fc7deb3ac4e",
+      "bytes": 25196,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "raincoat",
+      "name": "Rainy day",
+      "outfit": "a mustard yellow rain hat and raincoat",
+      "output": "apps/web/public/avatars/raincoat.webp",
+      "sha256": "07e4369cecf157dd94bd8a723cdaef842a1e87b0ea6b431528a71628872e379c",
+      "bytes": 28214,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "cozy",
+      "name": "Cozy",
+      "outfit": "a chunky rust scarf and cream knit beanie",
+      "output": "apps/web/public/avatars/cozy.webp",
+      "sha256": "51b31ce54560d74fb7975f1dc55251dae58c07d755df39fa83da898d6a322b52",
+      "bytes": 27788,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "sailor",
+      "name": "Sailor",
+      "outfit": "a cream sailor cap and green striped sailor top",
+      "output": "apps/web/public/avatars/sailor.webp",
+      "sha256": "63db41fbd07e887d441674bde85805f1cc14d37c585f903f75fdfa2fa7638f35",
+      "bytes": 26616,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "photographer",
+      "name": "Photographer",
+      "outfit": "a tan bucket hat and camera on a neck strap",
+      "output": "apps/web/public/avatars/photographer.webp",
+      "sha256": "5dcaba938db4629b9ce4ce653b6d5d6c5d9a2ee5856dd82c902a604fa85d391f",
+      "bytes": 24818,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "builder",
+      "name": "Builder",
+      "outfit": "an amber hard hat and sage work overalls",
+      "output": "apps/web/public/avatars/builder.webp",
+      "sha256": "7a3771a229761a82f7dbc21677788d6fc52a0b3fa02fa0e1661feafe3ea4ab89",
+      "bytes": 26276,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "barista",
+      "name": "Barista",
+      "outfit": "a forest green barista apron, holding a tiny cream coffee cup",
+      "output": "apps/web/public/avatars/barista.webp",
+      "sha256": "df74e4e650b26cdcdd0bfe6f6054ebd269602f82f053f983ce9fc5c976555bd2",
+      "bytes": 22904,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "chef",
+      "name": "Chef",
+      "outfit": "a tall cream chef toque and cream double-breasted chef jacket",
+      "output": "apps/web/public/avatars/chef.webp",
+      "sha256": "06e0691b817d92321ba04fbea2faef0e38c1fcb6d9a55fd93e1c25c3acee861f",
+      "bytes": 24978,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    },
+    {
+      "id": "skater",
+      "name": "Skater",
+      "outfit": "a backwards rust baseball cap and oversized sage T-shirt, holding a skateboard",
+      "output": "apps/web/public/avatars/skater.webp",
+      "sha256": "0530bb2cd63a822b301d476dbd802fab348c36074a48d329a7bae005acde2c56",
+      "bytes": 26922,
+      "width": 384,
+      "height": 384,
+      "transparent": true
+    }
+  ],
+  "artwork_license": "CC0-1.0; see apps/web/public/ARTWORK_LICENSE.md",
+  "original_sources": "Generation PNGs are local working artifacts; optimized WebPs are bundled."
+}

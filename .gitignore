@@ -1,0 +1,30 @@
+# Dependencies and generated builds
+node_modules/
+.next/
+.next-dev/
+.open-next/
+out/
+.wrangler/
+*.tsbuildinfo
+coverage/
+# Local credentials, service state, and test output
+.env*
+!.env.example
+.dev.vars*
+.spacefast/
+.impeccable/
+artifacts/
+*.log
+*.pem
+*.key
+*.p12
+*.pfx
+.DS_Store
+# Owner records stay local; only portable docs are tracked.
+/docs/*
+!/docs/SETUP.md
+!/docs/ARCHITECTURE.md
+!/docs/WORDPRESS_CONNECT.md
+!/docs/DEPLOYMENT.md
+!/docs/STATUS.md
+!/docs/avatar-art-manifest.json
