@@ -1,0 +1,48 @@
+/* Shared app controls. Gutenberg keeps its scoped, native toolbar treatment. */
+:root{--riffit-control-line:#7b8f80;--riffit-primary-hover:#173f2f;--riffit-select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23214e3b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+:root[data-theme=dark]{--riffit-control-line:#718a76;--riffit-primary-hover:#a8ca99;--riffit-select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b8d7aa' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+html :is(.community-app,.auth) button:not(:where(.riffit-block-editor *)){border-radius:8px;min-height:40px;line-height:1.4;border:1px solid transparent;}
+html[data-theme] :is(.community-app,.auth) :is(button,.button):not(:where(.quiet,[aria-pressed],.riffit-block-editor *,.theme-menu *,.search-form *,.poll-option)){background:var(--riffit-accent);color:var(--riffit-on-accent);border-color:transparent;}
+html[data-theme] :is(.community-app,.auth) :is(button,.button):not(:where(.quiet,[aria-pressed],.riffit-block-editor *,.theme-menu *,.search-form *,.poll-option)):hover:not(:disabled){background:var(--riffit-primary-hover);}
+html :is(.community-app,.auth) button:not(:where(.riffit-block-editor *)):hover{filter:none;}
+html[data-theme] :is(.community-app,.auth) .quiet:not(:where(.riffit-block-editor *)){background:transparent;color:var(--riffit-accent);border-color:transparent;}
+html[data-theme] :is(.community-app,.auth) :is(button.quiet,.theme-menu button,button[aria-pressed=false]):not(:where(.riffit-block-editor *)):is(:hover,:focus-visible):not(:disabled){background:var(--riffit-surface);color:var(--riffit-accent);}
+html[data-theme] :is(.community-app,.auth) :is(button[aria-pressed=true],button[aria-expanded=true],button.active,.vote-rail button[aria-pressed=true]):not(:where(.riffit-block-editor *)){background:var(--riffit-surface);color:var(--riffit-accent);box-shadow:inset 0 0 0 1px var(--riffit-accent);}
+html[data-theme] :is(.community-app,.auth) :is(button,a,summary,select,input,textarea):not(:where(.riffit-block-editor *)):focus-visible{outline:2px solid var(--riffit-focus);outline-offset:2px;}
+html[data-theme] :is(.community-app,.auth) button:not(:where(.riffit-block-editor *)):disabled{background:var(--riffit-surface);color:var(--riffit-muted);border-color:var(--riffit-line);opacity:1;cursor:not-allowed;filter:none;}
+html[data-theme] :is(.community-app,.auth) :is(input:not([type=radio],[type=checkbox],[type=file],[type=hidden]),textarea,select):not(:where(.riffit-block-editor *,.search-form *,.post-title-input)){background-color:var(--riffit-raised);color:var(--riffit-ink);border:1px solid var(--riffit-control-line);border-radius:10px;padding:10px 12px;font:inherit;line-height:1.5;max-width:100%;min-width:0;}
+html[data-theme] :is(.community-app,.auth) :is(input,textarea,select):not(:where(.riffit-block-editor *)):focus-visible{border-color:var(--riffit-accent);}
+html[data-theme] :is(.community-app,.auth) :is(input,textarea):not(:where(.riffit-block-editor *))::placeholder{color:var(--riffit-muted);opacity:1;}
+html[data-theme] :is(.community-app,.auth) :is(input,textarea,select):not(:where(.riffit-block-editor *)):disabled{background-color:var(--riffit-surface);color:var(--riffit-muted);cursor:not-allowed;}
+html[data-theme] :is(.community-app,.auth) select:not([multiple]):not(:where(.riffit-block-editor *)){appearance:none;-webkit-appearance:none;background-image:var(--riffit-select-arrow);background-repeat:no-repeat;background-position:right 14px center;background-size:14px;padding-right:40px;min-height:42px;}
+html[data-theme] :is(.community-app,.auth) select option{background:var(--riffit-raised);color:var(--riffit-ink);}
+html[data-theme] .community-app .composer-community-select select{background-image:none;}
+html[data-theme] :is(.community-app,.auth) input[type=file]::file-selector-button{font:inherit;background:var(--riffit-surface);color:var(--riffit-accent);border:1px solid var(--riffit-control-line);border-radius:8px;padding:8px 12px;margin-right:10px;cursor:pointer;}
+html[data-theme] :is(.community-app,.auth) summary{color:var(--riffit-accent);}
+html[data-theme] :is(.community-app,.auth) :is(.profile-avatar-picker,.post-metadata,.appearance-editor,.theme-picker,.account-menu)>summary:hover{background:var(--riffit-surface);}
+html[data-theme] :is(.community-app,.auth) :is(.profile-avatar-picker,.post-metadata,.appearance-editor,.theme-picker,.account-menu)[open]>summary{background:var(--riffit-surface);color:var(--riffit-accent);box-shadow:inset 0 0 0 1px var(--riffit-accent);}
+html[data-theme] .community-app .profile-avatar-picker>summary{border-radius:10px;}
+html[data-theme] .community-app .profile-avatar-picker>summary:focus-visible{outline-offset:-3px;}
+html[data-theme] .community-app .account-menu>summary{border-radius:50%;}
+html[data-theme] .community-app .avatar-choice.is-selected .avatar-choice-art{background:var(--riffit-surface);border-color:var(--riffit-accent);}
+html[data-theme] .community-app .avatar-choice input:focus-visible+.avatar-choice-art{outline:2px solid var(--riffit-focus);outline-offset:2px;}
+html[data-theme] .community-app .avatar-choice-art svg{background:var(--riffit-accent);color:var(--riffit-on-accent);}
+html[data-theme] .community-app .account-settings-grid>section{background:var(--riffit-surface);border-color:var(--riffit-line);color:var(--riffit-ink);}
+html[data-theme] .community-app .moderation-tabs{flex-wrap:wrap;gap:8px;border-color:var(--riffit-line);}
+html[data-theme] .community-app .moderation-tabs button{font-size:13px;padding:8px 12px;text-decoration:none;}
+html[data-theme] .community-app .member-row form{min-width:0;max-width:100%;align-items:center;flex-wrap:wrap;}
+html[data-theme] .community-app .member-row select{flex:1;min-width:0;max-width:100%;}
+html[data-theme] .community-app .community-settings :is(input,textarea){width:100%;}
+html[data-theme] .community-app .community-settings textarea{min-height:110px;resize:vertical;}
+html[data-theme] .community-app .profile-save-row{gap:10px;}
+@media(max-width:750px){html[data-theme] .community-app .account-settings-grid>section{padding:16px;}html[data-theme] .community-app .moderation{padding:16px 0;}html[data-theme] .community-app .profile-save-row button{flex:1 1 130px;}}
+
+html[data-theme] :is(.community-app,.auth) .theme-menu button{background:transparent;color:var(--riffit-ink);border-color:transparent;}
+html[data-theme] .community-app .moderation .empty>svg{color:var(--riffit-accent);}
+@media(prefers-reduced-motion:reduce){.community-app .profile-avatar-picker>summary>svg{transition:none;}}
+
+html[data-theme] :is(.community-app,.auth) .theme-menu button:is(:hover,:focus-visible){background:var(--riffit-surface);color:var(--riffit-accent);}
+html[data-theme] :is(.community-app,.auth) input[type=file]:hover::file-selector-button{border-color:var(--riffit-accent);}
+
+html[data-theme] .community-app .appearance-editor>summary{border-radius:8px;padding:8px 10px;min-height:40px;}
+html[data-theme] .community-app input[type=file]:not(:where(.riffit-block-editor *)){background:var(--riffit-raised);color:var(--riffit-ink);border:1px solid var(--riffit-control-line);border-radius:10px;padding:8px;max-width:100%;}

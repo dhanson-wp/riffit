@@ -92,3 +92,7 @@ The original Riffit toolbar hosts native Gutenberg inline formatting fills above
 Publishing forms are siblings of the Gutenberg surface, with explicit HTML form associations for product fields. Native table and media forms cannot submit the publishing form. Core-data is seeded with the attachment snapshots already present in blocks or returned by uploads, avoiding a second wp-admin REST client. Link entry accepts URLs without an unrelated WordPress search request.
 
 Static rendering allows image captions, tables, and video playback controls while stripping scripts, event handlers, iframes, and autoplay. Spoilers get keyboard-accessible reveal controls, and feed excerpts conceal spoiler text. Browser drafts remain member-scoped local storage; uploaded inline image references survive restoration, while separate image-post file selections must be selected again.
+
+## Shared control styling
+
+App buttons, fields, native selects, and disclosures share the `--riffit-*` theme tokens through `apps/web/app/controls.css`. Primary actions use the accent fill; secondary, selected, and expanded controls use neutral or sage surfaces. Keyboard focus uses a 2px ring, and single-select fields reserve space for an inset chevron. Disabled labels use muted colors without opacity fading. Gutenberg keeps its scoped toolbar styling in `editor.css`.
