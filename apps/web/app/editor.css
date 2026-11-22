@@ -1,25 +1,64 @@
-.riffit-block-editor { --wp-admin-theme-color:#245b43; --wp-admin-theme-color--rgb:36,91,67; --wp-admin-theme-color-darker-10:#194a34; --wp-admin-theme-color-darker-20:#123c29; color:#233b30; font-family:inherit; }
-.community-app .writing-actions {display:flex;align-items:center;gap:4px;border-bottom:1px solid #e0e8e1;padding:8px 0;color:#697c70;font-size:12px;}
-.community-app .writing-actions span{margin-left:auto;}
-.community-app .riffit-block-editor button.components-button {width:auto;min-width:0;min-height:32px;padding:6px;border:0;border-radius:5px;background:transparent;color:#355a45;box-shadow:none;line-height:1;}
-.community-app .riffit-block-editor button.components-button:hover {background:#eaf1e8;}
-.community-app .riffit-block-editor button.components-button:disabled {opacity:.35;}
-.community-app .riffit-block-editor svg {width:24px;height:24px;max-width:none;}
-.community-app .riffit-writing-canvas {min-height:280px;padding:22px 4px 80px;cursor:text;font-size:17px;line-height:1.65;}
-.community-app .riffit-writing-canvas .wp-block {max-width:100%;margin:0 0 18px;}
-.community-app .riffit-writing-canvas p {font-size:inherit;line-height:inherit;color:inherit;}
-.community-app .riffit-writing-canvas h2 {font-size:25px;margin:20px 0 12px;}
-.community-app .riffit-writing-canvas h3 {font-size:21px;}
-.community-app .riffit-writing-canvas ul,.community-app .riffit-writing-canvas ol {padding-left:26px;}
-.community-app .riffit-writing-canvas blockquote {border-left:3px solid #91b49a;margin:18px 0;padding-left:20px;}
-.community-app .riffit-writing-canvas pre {background:#eff3ed;padding:16px;white-space:pre-wrap;}
-.riffit-block-editor .block-editor-block-list__layout {min-height:110px;}
-.riffit-block-editor .block-editor-block-list__block:focus:after {box-shadow:none;}
-.community-app .riffit-block-editor input {width:auto;}
-.components-popover {z-index:100;}
-@media(max-width:750px){.community-app .riffit-writing-canvas {padding-top:20px;font-size:16px;}.community-app .riffit-block-editor .block-editor-block-contextual-toolbar {max-width:calc(100vw - 32px);overflow-x:auto;}}
+.riffit-block-editor{--wp-admin-theme-color:var(--riffit-accent,#245b43);--wp-admin-theme-color--rgb:36,91,67;--wp-admin-theme-color-darker-10:#194a34;--wp-admin-theme-color-darker-20:#123c29;color:var(--riffit-ink);font-family:inherit;border:1px solid var(--riffit-line);border-radius:14px;background:var(--riffit-raised);overflow:visible;margin:22px 0 0;}
+.riffit-editor-tools{position:sticky;top:72px;z-index:30;border-bottom:1px solid var(--riffit-line);border-radius:14px 14px 0 0;background:var(--riffit-raised);padding:5px;}
+.community-app .riffit-writing-toolbar.components-accessible-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:2px;width:100%;min-height:40px;border:0;background:transparent;}
+.community-app .riffit-block-editor .components-toolbar-group{display:flex;flex-shrink:0;min-height:34px;padding:0 3px;border:0;border-right:1px solid var(--riffit-line);background:transparent;gap:1px;}
+.community-app .riffit-block-editor .components-toolbar-group:last-child{border-right:0;}
+.community-app .riffit-block-editor button.components-button{width:auto;min-width:32px;min-height:34px;height:34px;margin:0;padding:7px;border:0;border-radius:6px;background:transparent;color:var(--riffit-ink);box-shadow:none;line-height:1;}
+.community-app .riffit-block-editor button.components-button:hover:not(:disabled){background:var(--riffit-surface);color:var(--riffit-accent);}
+.community-app .riffit-block-editor button.components-button.is-pressed,.community-app .riffit-block-editor button.components-button[aria-pressed=true]{background:var(--riffit-surface);color:var(--riffit-accent);box-shadow:inset 0 0 0 1px var(--riffit-line);}
+.community-app .riffit-block-editor button.components-button:disabled{opacity:.35;cursor:default;}
+.community-app .riffit-block-editor button.components-button:focus-visible{outline:2px solid var(--riffit-focus);outline-offset:1px;}
+.community-app .riffit-block-editor svg{width:19px;height:19px;max-width:none;flex-shrink:0;}
+.community-app .riffit-text-style button{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;}
+.community-app .riffit-text-style .style-chevron{width:12px;height:12px;}
+.community-app .riffit-editor-history{margin-left:auto;}
+.community-app .riffit-block-options{display:flex;flex-wrap:wrap;gap:4px;}
+.community-app .riffit-block-options:empty{display:none;}
+.community-app .riffit-writing-canvas{min-height:300px;padding:24px 24px 64px;cursor:text;font-size:17px;line-height:1.7;overflow-wrap:anywhere;}
+.community-app .riffit-writing-canvas .wp-block{max-width:100%;margin:0 0 18px;color:inherit;}
+.community-app .riffit-writing-canvas p{font-size:inherit;line-height:inherit;color:inherit;}
+.community-app .riffit-writing-canvas h2{font-size:26px;line-height:1.25;margin:24px 0 12px;}
+.community-app .riffit-writing-canvas h3{font-size:22px;line-height:1.3;}
+.community-app .riffit-writing-canvas ul,.community-app .riffit-writing-canvas ol{padding-left:26px;}
+.community-app .riffit-writing-canvas blockquote,.community-app .rich-post blockquote{border-left:3px solid var(--riffit-accent);margin:20px 0;padding:2px 0 2px 20px;color:var(--riffit-muted);}
+.community-app .riffit-writing-canvas pre,.community-app .rich-post pre{background:var(--riffit-surface);border:1px solid var(--riffit-line);border-radius:8px;padding:16px;white-space:pre-wrap;color:var(--riffit-ink);font-size:14px;}
+.community-app .riffit-writing-canvas img,.community-app .rich-post img,.community-app .riffit-writing-canvas video,.community-app .rich-post video{display:block;max-width:100%;height:auto;border-radius:10px;}
+.community-app .riffit-writing-canvas figure,.community-app .rich-post figure{margin:20px 0;max-width:100%;}
+.community-app .riffit-writing-canvas figcaption,.community-app .rich-post figcaption{color:var(--riffit-muted);font-size:13px;text-align:center;margin-top:8px;}
+.community-app .riffit-writing-canvas table,.community-app .rich-post table{width:100%;border-collapse:collapse;font-size:14px;}
+.community-app .riffit-writing-canvas td,.community-app .riffit-writing-canvas th,.community-app .rich-post td,.community-app .rich-post th{border:1px solid var(--riffit-line);padding:10px;text-align:left;}
+.community-app .riffit-writing-canvas .wp-block-table,.community-app .rich-post .wp-block-table{overflow-x:auto;}
+.riffit-writing-canvas .block-editor-block-list__layout{min-height:160px;}
+.riffit-writing-canvas .block-editor-block-list__block .block-editor-block-list__layout,.riffit-writing-canvas .block-editor-block-list__block.block-editor-block-list__layout{min-height:0;}
+.riffit-writing-canvas .block-editor-block-list__block:focus:after{box-shadow:none;}
+.community-app .riffit-writing-canvas [contenteditable]:focus-visible{outline:0;}
+.community-app .riffit-block-editor:focus-within{border-color:var(--riffit-focus);}
+.community-app .riffit-block-editor input{width:auto;}
+.community-app .riffit-editor-footer{display:flex;justify-content:space-between;gap:12px;padding:10px 18px;border-top:1px solid var(--riffit-line);font-size:11px;color:var(--riffit-muted);}
+.community-app .riffit-editor-status{margin:0;padding:10px 18px;font-size:13px;}
+.components-popover{z-index:120;}
+.riffit-editor-menu .components-popover__content{min-width:210px;padding:6px;border:1px solid var(--riffit-line);border-radius:10px;background:var(--riffit-raised);color:var(--riffit-ink);}
+.riffit-editor-menu .components-menu-item__button{color:var(--riffit-ink);font:inherit;}
+.riffit-editor-menu .components-menu-item__button:hover{background:var(--riffit-surface);}
+.riffit-writing-canvas .riffit-spoiler{background:var(--riffit-surface);box-shadow:0 0 0 1px var(--riffit-line);border-radius:3px;padding:0 2px;}
+.rich-post .riffit-spoiler{background:var(--riffit-muted);color:transparent;border-radius:3px;cursor:pointer;user-select:none;}
+.rich-post .riffit-spoiler.is-revealed{background:var(--riffit-surface);color:inherit;user-select:text;}
+.rich-post .riffit-spoiler:focus-visible{outline:2px solid var(--riffit-focus);outline-offset:3px;}
+@media(max-width:750px){.riffit-editor-tools{top:112px;}.community-app .riffit-writing-canvas{padding:20px 16px 48px;font-size:16px;min-height:260px;}.community-app .riffit-text-style button span,.community-app .riffit-text-style .style-chevron{display:none;}.community-app .riffit-writing-toolbar.components-accessible-toolbar{gap:2px;}.community-app .riffit-block-editor .components-toolbar-group{padding:0 2px;}.community-app .riffit-block-editor button.components-button{min-width:34px;min-height:36px;height:36px;padding:7px;}.community-app .riffit-insert-tools{order:2;}.community-app .riffit-editor-footer{padding:10px 12px;font-size:10px;}.community-app .riffit-block-options{max-width:100%;overflow-x:auto;}.community-app .riffit-block-editor .block-editor-media-placeholder{padding:16px;min-width:0;}.community-app .riffit-block-editor .block-editor-media-placeholder__button{height:auto;}}
 
-.riffit-writing-canvas .block-editor-block-list__block .block-editor-block-list__layout {min-height:0;}
+/* Gutenberg uses filled icons; Riffit insert icons are Lucide outlines. */
+.community-app .riffit-block-editor svg.lucide,.riffit-editor-menu svg.lucide{fill:none;stroke:currentColor;stroke-width:1.8;}
+.community-app .riffit-block-editor .wp-block-video .components-form-file-upload,.community-app .riffit-block-editor .wp-block-video .components-placeholder__instructions{display:none;}
+.community-app .riffit-block-options .components-base-control{width:100%;margin:4px 8px 8px;}
+.community-app .riffit-block-options .components-text-control__input{width:100%;}
+.community-app .riffit-video-help{padding:8px;color:var(--riffit-muted);}
+.composer-form>form:empty,.inline-editor>form:empty{display:none;}
 
-.riffit-writing-canvas .block-editor-block-list__block.block-editor-block-list__layout {min-height:0;}
-.community-app .riffit-writing-canvas [contenteditable][role="textbox"]:focus-visible {outline:1px solid var(--riffit-focus,#73926b);outline-offset:5px;}
+.community-app .riffit-block-options .components-toolbar:not(:has(button,input,select,textarea)){display:none;}
+
+/* Keep the chevrons within their controls, with room on both sides. */
+.community-app .composer-community-select{position:relative;display:inline-flex;max-width:100%;}
+.community-app .composer-community-select select{appearance:none;-webkit-appearance:none;padding-right:40px;max-width:100%;}
+.community-app .composer-community-select>svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:14px;height:14px;pointer-events:none;fill:none;stroke:currentColor;}
+.community-app .riffit-text-style button.components-button{padding-inline:10px;gap:7px;}
+.community-app .riffit-text-style .style-chevron{margin-left:2px;flex-shrink:0;}

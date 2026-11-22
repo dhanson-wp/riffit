@@ -212,9 +212,30 @@ class Api {
     protected function render_member_content( string $content ): string {
         $html = preg_replace( '/<!--[\s\S]*?-->/', '', $content );
         if ( ! has_blocks( $content ) ) { $html = wpautop( $html ); }
-        $tags = array_fill_keys( array( 'p','br','strong','b','em','i','s','del','h2','h3','h4','h5','h6','ul','ol','li','blockquote','cite','pre','code','hr' ), array() );
+        $tags = array_fill_keys( array( 'p','br','strong','b','em','i','s','del','h2','h3','h4','h5','h6','ul','ol','li','blockquote','cite','pre','code','hr','sup','sub','u','figure','figcaption','table','thead','tbody','tfoot','tr','td','th','caption' ), array() );
         $tags['a'] = array( 'href' => true, 'title' => true );
+        $tags['img'] = array_fill_keys( array( 'src', 'alt', 'width', 'height', 'class' ), true );
+        $tags['video'] = array_fill_keys( array( 'src', 'controls', 'preload', 'width', 'height' ), true );
+        $tags['source'] = array( 'src' => true, 'type' => true );
+        $tags['span'] = array( 'class' => true );
+        $tags['figure']['class'] = true;
+        foreach ( array( 'td', 'th' ) as $cell ) { $tags[$cell] = array( 'colspan' => true, 'rowspan' => true, 'scope' => true ); }
+
         $html = wp_kses( $html, $tags, array( 'http', 'https', 'mailto' ) );
+        $processor = new \WP_HTML_Tag_Processor( $html );
+        while ( $processor->next_tag( 'SPAN' ) ) {
+            if ( 'riffit-spoiler' === $processor->get_attribute( 'class' ) ) {
+                $processor->set_attribute( 'tabindex', '0' ); $processor->set_attribute( 'role', 'button' );
+                $processor->set_attribute( 'aria-expanded', 'false' ); $processor->set_attribute( 'aria-label', 'Reveal spoiler' );
+            } else { $processor->remove_attribute( 'class' ); }
+        }
+        $html = $processor->get_updated_html();
+        $processor = new \WP_HTML_Tag_Processor( $html );
+        while ( $processor->next_tag( 'VIDEO' ) ) {
+            $processor->set_attribute( 'controls', true );
+            $processor->set_attribute( 'preload', 'metadata' );
+        }
+        $html = $processor->get_updated_html();
         $parts = preg_split( '/(<[^>]+>)/', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
         $protected = 0;
         foreach ( $parts as &$part ) {

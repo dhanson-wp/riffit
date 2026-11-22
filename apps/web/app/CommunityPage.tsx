@@ -18,7 +18,7 @@ export default async function Home({ searchParams, communitySlug }: {
     let response = await wordpress(path, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
     if (response.status === 401 && !path.startsWith('/saved') && !path.startsWith('/messages')) response = await wordpress(path);
     const data = await response.json();
-    if (response.status === 404 && /^\/(posts\/\d+|communities\/(\d+|by-slug\/[^/?]+)|profiles\/[^/?]+)(?:\?|$)/.test(path)) throw new MissingCommunityPage();
+    if (response.status === 404 && /^\/(posts\/\d+(?:\/replies)?|communities\/(\d+|by-slug\/[^/?]+)|profiles\/[^/?]+)(?:\?|$)/.test(path)) throw new MissingCommunityPage();
     if (!response.ok) throw new Error(data.message || 'The community service is unavailable.');
     return data;
   }

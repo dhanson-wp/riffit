@@ -12,7 +12,7 @@ export async function wordpress(path: string, init: RequestInit = {}) {
   if (!base) throw new Error('Backend is not configured.');
   const url = new URL('/wp-json/riffit/v1' + path, base);
   // Bypass stale public REST responses cached before the product API was no-store.
-  url.searchParams.set('riffit_client', '0.9.1');
+  url.searchParams.set('riffit_client', '0.10.0');
   if (url.protocol !== 'https:' && !['127.0.0.1', 'localhost'].includes(url.hostname)) throw new Error('HTTPS is required.');
   const send = async () => {
     const response = await fetch(url, { ...init, cache: 'no-store' as const, redirect: 'manual' as const, signal: AbortSignal.timeout(20000) });

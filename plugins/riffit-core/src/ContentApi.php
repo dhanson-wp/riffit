@@ -23,7 +23,9 @@ class ContentApi extends MessagesApi {
         $title = trim( $request['title'] ); $kind = $request['kind'] ?: 'text';
         if ( ! $title ) { return $this->error( 'empty_post', 'Give your post a title.' ); }
         $content = $request['content']; $meta = array( 'kind' => $kind, 'flair' => $request['flair'] ?: '' );
-        if ( 'text' === $kind && ! trim( wp_strip_all_tags( $content ) ) ) { return $this->error( 'empty_post', 'Write a post before sharing.' ); }
+        if ( 'text' === $kind && ! trim( wp_strip_all_tags( $content ) ) && ! preg_match( '/<(?:img|video)\b/i', $content ) ) { return $this->error( 'empty_post', 'Write a post before sharing.' ); }
+        $inline_media = $this->inline_media_ids( $content, (int) $group->id );
+        if ( is_wp_error( $inline_media ) ) { return $inline_media; }
         if ( 'link' === $kind ) {
             $url = trim( $request['url'] );
             if ( ! wp_http_validate_url( $url ) || ! in_array( wp_parse_url( $url, PHP_URL_SCHEME ), array( 'http', 'https' ), true ) ) { return $this->error( 'invalid_url', 'Use a public HTTP or HTTPS link.' ); }
@@ -51,9 +53,41 @@ class ContentApi extends MessagesApi {
         $forum = (int) groups_get_groupmeta( $group->id, 'riffit_forum_id', true );
         $id = bbp_insert_topic( array( 'post_title' => $title, 'post_content' => $content, 'post_author' => get_current_user_id(), 'post_parent' => $forum, 'post_status' => 'publish' ), array( 'forum_id' => $forum ) );
         if ( ! $id || is_wp_error( $id ) ) { return $this->error( 'post_failed', 'Could not create this post.', 500 ); }
+        foreach ( $inline_media as $media_id ) { wp_update_post( array( 'ID' => $media_id, 'post_parent' => $id ) ); }
         update_post_meta( $id, '_riffit_post', $meta );
         if ( 'image' === $kind ) { wp_update_post( array( 'ID' => $meta['attachment'], 'post_parent' => $id ) ); }
         return new \WP_REST_Response( $this->post_data( get_post( $id ) ), 201 );
+    }
+
+    /** Validate every actual media tag, including pasted HTML, before storing it. */
+    protected function inline_media_ids( string $content, int $group, int $topic = 0 ) {
+        $html = new \WP_HTML_Tag_Processor( $content ); $ids = array();
+        while ( $html->next_tag() ) {
+            $tag = $html->get_tag();
+            if ( ! in_array( $tag, array( 'IMG', 'VIDEO', 'SOURCE' ), true ) ) { continue; }
+            $url = (string) $html->get_attribute( 'src' );
+            if ( 'IMG' === $tag ) {
+                if ( ! trim( (string) $html->get_attribute( 'alt' ) ) ) { return $this->error( 'image_description', 'Add an image description before posting.' ); }
+                preg_match( '/(?:^|\s)wp-image-(\d+)(?:\s|$)/', (string) $html->get_attribute( 'class' ), $match );
+                $id = (int) ( $match[1] ?? 0 );
+                if ( $id ) {
+                    $image = get_post( $id );
+                    if ( ! $image || 'attachment' !== $image->post_type || (int) $image->post_author !== get_current_user_id() || ! get_post_meta( $id, '_riffit_upload', true ) || get_post_meta( $id, '_riffit_branding', true ) || (int) get_post_meta( $id, '_riffit_community', true ) !== $group || ! wp_attachment_is_image( $id ) || ( $image->post_parent && (int) $image->post_parent !== $topic ) ) { return $this->error( 'invalid_image', 'Use your own image uploaded to this community. Images already used by another post cannot be attached again.' ); }
+                    $urls = array();
+                    foreach ( array_merge( array( 'full' ), get_intermediate_image_sizes() ) as $size ) { $urls[] = wp_get_attachment_image_url( $id, $size ); }
+                    if ( ! in_array( $url, $urls, true ) ) { return $this->error( 'invalid_image', 'This image URL does not match its uploaded attachment.' ); }
+                    $ids[] = $id;
+                    continue;
+                }
+            }
+            // URLs are stored, never fetched or resolved into embeds by this API.
+            $host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
+            $ip = trim( $host, '[]' );
+            $private_host = 'localhost' === $host || str_ends_with( $host, '.localhost' ) || str_ends_with( $host, '.local' ) || ( filter_var( $ip, FILTER_VALIDATE_IP ) && ! filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) );
+            if ( $private_host || 'https' !== wp_parse_url( $url, PHP_URL_SCHEME ) || ! wp_http_validate_url( $url ) ) { return $this->error( 'invalid_media_url', 'Use a public HTTPS media URL or upload an image.' ); }
+            if ( 'IMG' !== $tag && ! preg_match( '/\.(?:mp4|webm|ogv|ogg)$/i', (string) wp_parse_url( $url, PHP_URL_PATH ) ) ) { return $this->error( 'invalid_video', 'Use a direct MP4, WebM, or Ogg video URL. Share YouTube and Vimeo pages as links.' ); }
+        }
+        return array_values( array_unique( $ids ) );
     }
 
     protected function hydrate_posts( array $posts ): array {

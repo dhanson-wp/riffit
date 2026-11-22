@@ -92,12 +92,15 @@ class ModerationApi extends NotificationsApi {
         if ( bbp_is_topic_closed( $object['topic'] ) ) { return $this->error( 'closed', 'This discussion is closed.', 403 ); }
         $is_topic = bbp_get_topic_post_type() === $post->post_type;
         $meta = get_post_meta( $post->ID, '_riffit_post', true );
-        if ( ( ! $is_topic || 'text' === ( $meta['kind'] ?? 'text' ) ) && ! trim( wp_strip_all_tags( $request['content'] ) ) ) { return $this->error( 'empty_post', 'Write something before saving.' ); }
+        if ( ( ! $is_topic || 'text' === ( $meta['kind'] ?? 'text' ) ) && ! trim( wp_strip_all_tags( $request['content'] ) ) && ! ( $is_topic && preg_match( '/<(?:img|video)\b/i', $request['content'] ) ) ) { return $this->error( 'empty_post', 'Write something before saving.' ); }
         if ( $is_topic && ! trim( $request['title'] ) ) { return $this->error( 'empty_title', 'Give your post a title.' ); }
+        $inline_media = $this->inline_media_ids( $request['content'], (int) $object['group'], $is_topic ? (int) $post->ID : 0 );
+        if ( is_wp_error( $inline_media ) ) { return $inline_media; }
         $update = array( 'ID' => $post->ID, 'post_content' => $request['content'] );
         if ( $is_topic ) { $update['post_title'] = $request['title']; }
         $saved = wp_update_post( $update, true );
         if ( is_wp_error( $saved ) ) { return $this->error( 'edit_failed', 'Could not save your changes.', 500 ); }
+        foreach ( $inline_media as $media_id ) { wp_update_post( array( 'ID' => $media_id, 'post_parent' => $post->ID ) ); }
         if ( $is_topic ) { if ( ! is_array( $meta ) ) { $meta = array( 'kind' => 'text' ); } $meta['flair'] = $request['flair']; update_post_meta( $post->ID, '_riffit_post', $meta ); }
         return $this->post_data( get_post( $post->ID ) );
     }

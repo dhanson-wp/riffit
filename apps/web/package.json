@@ -15,11 +15,12 @@
     "@wordpress/blocks": "17.0.0",
     "@wordpress/components": "43.0.0",
     "@wordpress/compose": "9.0.0",
+    "@wordpress/core-data": "9.0.0",
     "@wordpress/data": "11.0.0",
     "@wordpress/format-library": "6.0.0",
     "@wordpress/rich-text": "8.0.0",
     "lucide-react": "1.66.0",
-    "next": "15.5.28",
+    "next": "15.5.29",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "server-only": "0.0.1"

@@ -207,6 +207,41 @@ try {
     $image_post = riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'An image', 'kind' => 'image', 'attachment' => $attachment ) );
     riffit_check( 201 === $image_post->get_status() && 'One pixel test image' === $image_post->get_data()['image']['alt'], 'image post uses owned uploaded attachment and alt text' );
     riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Reuse', 'kind' => 'image', 'attachment' => $attachment ) )->get_status(), 'attached images cannot be claimed by a second post' );
+    // Inline Gutenberg media retain ownership, accessibility, and static rendering.
+    $inline_upload = riffit_call( 'POST', "/communities/$group/media", array( 'name' => 'inline.png', 'data' => $png ) )->get_data();
+    $inline_id = $inline_upload['id']; $inline_url = $inline_upload['url'];
+    $inline_html = '<!-- wp:image {"id":' . $inline_id . '} --><figure class="wp-block-image"><img src="' . esc_url( $inline_url ) . '" alt="A tiny test image" class="wp-image-' . $inline_id . '"/><figcaption>A caption.</figcaption></figure><!-- /wp:image -->';
+    $inline = riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Inline image', 'content' => $inline_html ) );
+    riffit_check( 201 === $inline->get_status(), 'media-only Gutenberg post accepted: ' . wp_json_encode( $inline->get_data() ) );
+    $inline_topic = $inline->get_data()['id'];
+    riffit_check( $inline_topic === (int) get_post( $inline_id )->post_parent && str_contains( $inline->get_data()['rendered'], '<img' ) && str_contains( $inline->get_data()['rendered'], 'A caption.' ), 'inline image is bound to its post and rendered with caption' );
+    riffit_check( 200 === riffit_call( 'PUT', "/objects/$inline_topic", array( 'title' => 'Edited inline image', 'content' => $inline_html ) )->get_status(), 'author can save the same inline attachment when editing' );
+    riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Reuse inline', 'content' => $inline_html ) )->get_status(), 'another post cannot claim an attached inline image' );
+    riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Missing description', 'content' => '<img src="https://example.com/a.png" alt=""/>' ) )->get_status(), 'inline image requires an image description' );
+    foreach ( array( 'http://example.com/a.png', 'https://127.0.0.1/a.png', 'https://localhost/a.png' ) as $unsafe ) {
+        riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Invalid media', 'content' => '<img src="' . $unsafe . '" alt="Test"/>' ) )->get_status(), 'inline image rejects nonpublic or non-HTTPS URL ' . $unsafe );
+    }
+    $unclaimed = riffit_call( 'POST', "/communities/$group/media", array( 'name' => 'unclaimed.png', 'data' => $png ) )->get_data();
+    $mismatch = '<img src="https://example.com/wrong.png" alt="Test" class="wp-image-' . $unclaimed['id'] . '"/>';
+    riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Mismatch', 'content' => $mismatch ) )->get_status(), 'inline attachment ID must match its actual image URL' );
+    update_post_meta( $unclaimed['id'], '_riffit_community', 999999 );
+    $owned_html = '<img src="' . esc_url( $unclaimed['url'] ) . '" alt="Test" class="wp-image-' . $unclaimed['id'] . '"/>';
+    riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Wrong group', 'content' => $owned_html ) )->get_status(), 'inline upload cannot cross communities' );
+    update_post_meta( $unclaimed['id'], '_riffit_community', $group );
+    wp_update_post( array( 'ID' => $unclaimed['id'], 'post_author' => $member ) );
+    riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Wrong author', 'content' => $owned_html ) )->get_status(), 'inline upload cannot be claimed from another member' );
+    wp_update_post( array( 'ID' => $unclaimed['id'], 'post_author' => $admin->ID ) );
+    riffit_check( 200 === riffit_call( 'PUT', "/objects/$inline_topic", array( 'title' => 'New image on edit', 'content' => $inline_html . $owned_html ) )->get_status() && $inline_topic === (int) get_post( $unclaimed['id'] )->post_parent, 'new inline uploads bind to the edited topic' );
+    $logo_html = '<img src="' . esc_url( wp_get_attachment_image_url( $logo_id, 'large' ) ) . '" alt="Logo" class="wp-image-' . $logo_id . '"/>';
+    riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Claim inline logo', 'content' => $logo_html ) )->get_status(), 'branding cannot be claimed as an inline upload' );
+    $rich_html = '<!-- wp:paragraph --><p><sup>2</sup><sub>3</sub><s>old</s><code>code</code><span class="riffit-spoiler" onclick="alert(1)">Secret</span><span class="bad is-revealed">Other</span></p><!-- /wp:paragraph --><blockquote><p>Quote</p></blockquote><figure class="wp-block-table"><table><tbody><tr><td>Cell</td></tr></tbody></table></figure><video controls preload="metadata" autoplay onplay="alert(1)" src="https://example.com/clip.mp4"></video><iframe src="https://example.com"></iframe>';
+    $rich = riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Rich blocks', 'content' => $rich_html ) );
+    riffit_check( 201 === $rich->get_status(), 'static table, quote, superscript, spoiler, and video URL accepted' );
+    $rendered = $rich->get_data()['rendered'];
+    riffit_check( str_contains( $rendered, '<table>' ) && str_contains( $rendered, '<sup>2</sup>' ) && str_contains( $rendered, '<blockquote>' ) && str_contains( $rendered, '<video' ) && str_contains( $rendered, 'controls' ) && str_contains( $rendered, 'preload="metadata"' ), 'rich blocks survive server rendering' );
+    riffit_check( str_contains( $rendered, 'aria-label="Reveal spoiler"' ) && str_contains( $rendered, 'tabindex="0"' ) && ! str_contains( $rendered, 'is-revealed' ), 'spoiler rendering supplies keyboard semantics and discards arbitrary span classes' );
+    riffit_check( ! preg_match( '/<(?:iframe|script)|onplay=|onclick=|autoplay/i', $rendered ), 'rich rendering strips executable embeds, events, and autoplay' );
+    riffit_check( 400 === riffit_call( 'POST', "/communities/$group/posts", array( 'title' => 'Page URL', 'content' => '<video src="https://www.youtube.com/watch?v=test"></video>' ) )->get_status(), 'video control requires direct media instead of an embedded provider page' );
     $invalid_image = riffit_call( 'POST', "/communities/$group/media", array( 'name' => 'unsafe.svg', 'data' => base64_encode( '<svg onload="alert(1)"></svg>' ) ) );
     riffit_check( 400 === $invalid_image->get_status(), 'SVG and executable image uploads rejected' );
     riffit_check( 400 === riffit_call( 'POST', "/communities/$group/media", array( 'name' => 'bad.php', 'data' => $png ) )->get_status(), 'image filename must match an allowed image extension' );
