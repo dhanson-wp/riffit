@@ -62,3 +62,24 @@
 .community-app .composer-community-select>svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:14px;height:14px;pointer-events:none;fill:none;stroke:currentColor;}
 .community-app .riffit-text-style button.components-button{padding-inline:10px;gap:7px;}
 .community-app .riffit-text-style .style-chevron{margin-left:2px;flex-shrink:0;}
+
+/* Keep history and block options together; small canvases use two deliberate rows. */
+.riffit-block-editor{container-type:inline-size;}
+.community-app .riffit-format-tools{display:flex;min-width:0;}
+.community-app .riffit-block-editor .riffit-editor-history{flex-wrap:nowrap;align-items:center;}
+.community-app .riffit-block-editor .riffit-editor-history .components-dropdown{display:flex;align-items:center;}
+@container(max-width:620px){
+ .community-app .riffit-writing-toolbar.components-accessible-toolbar{display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-areas:"style format history" "insert insert insert";gap:4px 0;}
+ .community-app .riffit-style-tools{grid-area:style;}
+ .community-app .riffit-format-tools{grid-area:format;}
+ .community-app .riffit-insert-tools{grid-area:insert;order:initial;justify-content:flex-start;border-right:0;}
+ .community-app .riffit-editor-history{grid-area:history;margin-left:0;}
+ .community-app .riffit-text-style button span,.community-app .riffit-text-style .style-chevron{display:none;}
+ .community-app .riffit-block-editor .components-toolbar-group{padding:0 1px;gap:0;}
+ .community-app .riffit-block-editor button.components-button{width:30px;min-width:30px;min-height:36px;height:36px;padding:5px;}
+ .community-app .riffit-text-style button.components-button{padding:5px;}
+}
+
+.community-app .riffit-format-tools .components-toolbar-group{flex-wrap:nowrap;}
+.community-app .riffit-format-tools .components-toolbar-group>div{display:flex;align-items:center;flex-wrap:nowrap;}
+.community-app .riffit-format-tools .components-dropdown{display:flex;align-items:center;flex-shrink:0;}
