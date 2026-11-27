@@ -1,0 +1,131 @@
+/* App navigation shares the control palette and stays usable with long community names. */
+.community-app .community-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  height: calc(100dvh - 72px);
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  background: var(--ground);
+}
+
+.community-app .rail-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 16px 10px;
+}
+
+.community-app .rail-section + .rail-section,
+.community-app .rail-footer {
+  border-top: 1px solid var(--line);
+}
+
+.community-app .rail-section + .rail-section {
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.community-app .community-nav h3 {
+  margin: 4px 10px 8px;
+  padding: 0;
+  border: 0;
+}
+
+.community-app .rail-footer {
+  padding: 8px 10px;
+}
+
+.community-app .community-nav .nav-item {
+  width: 100%;
+  min-height: 42px;
+  justify-content: flex-start;
+  gap: 9px;
+  padding: 7px 9px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.community-app .community-nav .nav-item > svg {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.community-app .rail-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.community-app .community-nav .nav-item[aria-current] {
+  background: var(--pale);
+  color: var(--forest);
+  font-weight: 650;
+}
+
+html[data-theme] .community-app .community-nav .nav-item:focus-visible {
+  outline-offset: -2px;
+}
+
+.community-app .compose {
+  scroll-margin-top: 86px;
+}
+
+@media (max-width: 750px) {
+  .community-app .community-nav {
+    display: none;
+    border: 0;
+  }
+
+  .community-app .account > a.header-shortcut {
+    display: none;
+  }
+
+  .community-app.navigation-open {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  .community-app.navigation-open .community-layout {
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+  }
+
+  .community-app.navigation-open .community-nav {
+    display: flex;
+    flex: 1;
+    height: auto;
+    padding: 0;
+  }
+
+  .community-app.navigation-open .feed {
+    display: none;
+  }
+
+  .community-app .community-nav .nav-item {
+    min-height: 44px;
+  }
+
+  .community-app .rail-footer {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .community-app .mobile-nav-toggle {
+    min-width: 40px;
+    min-height: 44px;
+  }
+
+  .community-app .compose {
+    scroll-margin-top: 126px;
+  }
+}

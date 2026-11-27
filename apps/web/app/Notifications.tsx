@@ -16,7 +16,7 @@ export function NotificationsNav({selected}:{selected:boolean}) {
     window.addEventListener('riffit-notifications-read',load);
     return () => { live=false; clearInterval(timer); window.removeEventListener('riffit-notifications-read',load); };
   }, []);
-  return <Link className={`nav-item ${selected?'selected':''}`} href="/?view=notifications"><Bell aria-hidden="true"/>Notifications{count !== null && count > 0 && <span className="notification-count" aria-label={`${count} unread`}>{count > 99 ? '99+' : count}</span>}</Link>;
+  return <Link className="nav-item" aria-current={selected ? 'page' : undefined} href="/?view=notifications"><Bell aria-hidden="true"/><span>Notifications</span>{count !== null && count > 0 && <span className="notification-count" aria-label={`${count} unread`}>{count > 99 ? '99+' : count}</span>}</Link>;
 }
 export default function Notifications({signedIn}:{signedIn:boolean}) {
   const [items,setItems] = useState<Notice[]>([]),[page,setPage] = useState(1),[pages,setPages] = useState(0),[loading,setLoading] = useState(true),[busy,setBusy] = useState(false),[error,setError] = useState(''),[refresh,setRefresh] = useState(0);
